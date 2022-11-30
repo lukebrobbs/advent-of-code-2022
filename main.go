@@ -9,6 +9,7 @@ import (
 )
 
 var day = flag.Int("day", 1, "Advent of code day to run")
+var part2 = flag.Bool("part-2", false, "Should we run part 2 of the code")
 
 func main() {
 	flag.Parse()
@@ -17,5 +18,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(challenges[*day](string(bytes)))
+	fmt.Println(challenges[*day](string(bytes), *part2))
+
 }
