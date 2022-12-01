@@ -12,8 +12,8 @@ func TestDay1(t *testing.T) {
 		part2    bool
 		expected int
 	}{
-		"example": {input: "1000\n2000\n3000\n\n4000\n\n5000\n6000\n\n7000\n8000\n9000\n\n10000", part2: false, expected: 24000},
-		"part 2":  {input: "1000\n2000\n3000\n\n4000\n\n5000\n6000\n\n7000\n8000\n9000\n\n10000", part2: true, expected: 45000},
+		"part 1": {input: "1000\n2000\n3000\n\n4000\n\n5000\n6000\n\n7000\n8000\n9000\n\n10000", part2: false, expected: 24000},
+		"part 2": {input: "1000\n2000\n3000\n\n4000\n\n5000\n6000\n\n7000\n8000\n9000\n\n10000", part2: true, expected: 45000},
 	}
 
 	for name, tc := range tests {
