@@ -19,5 +19,4 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(challenges[*day](string(bytes), *part2))
-
 }
