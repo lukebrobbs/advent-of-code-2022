@@ -51,7 +51,6 @@ func handlePart2(bags []string) (t int) {
 					break
 				}
 			}
-
 			g = g[:0]
 		}
 	}
