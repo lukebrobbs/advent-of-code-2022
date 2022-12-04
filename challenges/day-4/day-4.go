@@ -35,7 +35,6 @@ func Day4(input string, part2 bool) (t int) {
 
 	part2:
 		continue
-
 	}
 	return
 }
