@@ -34,9 +34,8 @@ func Day4(input string, part2 bool) (t int) {
 		}
 
 	part2:
-		if l > 0 {
-			continue
-		}
+		continue
+
 	}
 	return
 }
