@@ -21,7 +21,7 @@ func Day3(input string, part2 bool) (t int) {
 		b2 := b[len/2 : len]
 		for _, bi := range b1 {
 			if strings.ContainsRune(b2, bi) {
-				if !utils.RuneInSlice(bi, matches) {
+				if !utils.Contains(matches, bi) {
 					matches = append(matches, bi)
 				}
 			}
