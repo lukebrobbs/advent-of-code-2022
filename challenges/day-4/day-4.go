@@ -24,21 +24,21 @@ func Day4(input string, part2 bool) (t int) {
 				l++
 				if part2 {
 					t++
-					break
+					goto part2
 				}
 			}
 		}
-		if part2 {
-			if l > 0 {
-				continue
-			}
-		} else {
-			if l == shortest {
-				t++
-			}
+
+		if l == shortest {
+			t++
+		}
+
+	part2:
+		if l > 0 {
+			continue
 		}
 	}
-	return t
+	return
 }
 
 func createRange(s string) (r []int) {
