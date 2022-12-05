@@ -84,11 +84,12 @@ func moveStacks(in []int, sta stack) {
 func moveStacksPart2(in []int, sta stack) {
 	var sl []string
 	for i := 0; i < in[0]; i++ {
-		sl = append(sl, sta[in[1]][0])
-		if len(sta[in[1]]) > 1 {
-			sta[in[1]] = sta[in[1]][1:]
+		from := sta[in[1]]
+		sl = append(sl, from[0])
+		if len(from) > 1 {
+			sta[in[1]] = from[1:]
 		} else {
-			sta[in[1]] = sta[in[1]][:0]
+			sta[in[1]] = from[:0]
 		}
 	}
 	sta[in[2]] = append(sl, sta[in[2]]...)
