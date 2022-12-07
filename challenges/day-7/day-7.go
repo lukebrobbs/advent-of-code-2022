@@ -17,7 +17,6 @@ func Day7(input string, part2 bool) int {
 			cd = path.Join(cd, strings.Fields(s)[2])
 		} else if _, err := fmt.Sscanf(s, "%d %s", &size, &name); err == nil {
 			for d := cd; d != "/"; d = path.Dir(d) {
-				fmt.Print(d, " D ")
 				fs[d] += size
 			}
 			fs["/"] += size
