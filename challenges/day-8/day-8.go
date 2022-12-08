@@ -39,14 +39,6 @@ func numVisible(row []int, n int, reverse bool) int {
 
 func Day8(in string, part2 bool) int {
 	input := strings.Split(in, "\n")
-	// SAMPLE
-	//input := []string{
-	//	"30373",
-	//	"25512",
-	//	"65332",
-	//	"33549",
-	//	"35390",
-	//}
 
 	grid := make([][]int, len(input))
 	for i, v := range input {
