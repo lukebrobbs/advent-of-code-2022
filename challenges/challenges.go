@@ -8,6 +8,7 @@ import (
 	day5 "github.com/lukebrobbs/advent-of-code-2022/challenges/day-5"
 	day6 "github.com/lukebrobbs/advent-of-code-2022/challenges/day-6"
 	day7 "github.com/lukebrobbs/advent-of-code-2022/challenges/day-7"
+	day8 "github.com/lukebrobbs/advent-of-code-2022/challenges/day-8"
 )
 
 type challenge func(input string, part2 bool) int
@@ -20,4 +21,5 @@ var DayChallenges = map[int]challenge{
 	5: day5.Day5,
 	6: day6.Day6,
 	7: day7.Day7,
+	8: day8.Day8,
 }
