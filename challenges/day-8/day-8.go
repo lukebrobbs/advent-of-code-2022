@@ -1,108 +1,105 @@
 package day8
 
 import (
+	"strconv"
 	"strings"
 )
 
-type Tree struct {
-	height  rune
-	visible bool
+// isVisible returns true if the given tree is visible from outside the forest
+func isVisible(row []int, n int) bool {
+	for _, v := range row {
+		if v >= n {
+			return false
+		}
+	}
+	return true
 }
 
-func Day8(input string, part2 bool) int {
-	vis := 0
-	tr := strings.Split(input, "\n")
-
-	hor := checkHorizontal(tr)
-	hor = checkVertical(hor)
-	for _, h := range hor {
-		for _, t := range h {
-			if t.visible {
-				vis++
+// numVisible returns the number of trees visible from the given tree
+func numVisible(row []int, n int, reverse bool) int {
+	count := 0
+	if reverse {
+		for i := len(row) - 1; i >= 0; i-- {
+			count++
+			if row[i] >= n {
+				return count
+			}
+		}
+	} else {
+		for _, v := range row {
+			count++
+			if v >= n {
+				return count
 			}
 		}
 	}
-	return vis
+
+	return count
 }
 
-func checkHorizontal(trees []string) [][]*Tree {
-	vis := [][]*Tree{}
-	for trI, tr := range trees {
-		treeLs := []*Tree{}
-		for i, t := range tr {
-			if trI == 0 || trI == len(trees)-1 {
-				treeLs = append(treeLs, &Tree{t, true})
-				continue
-			}
-			visLeft, visRight := false, false
-			if i == 0 || i == len(trees)-1 {
-				treeLs = append(treeLs, &Tree{t, true})
-				continue
-			}
-			for in, tree := range tr {
-				if in == i {
-					visLeft = true
-					break
-				}
-				if tree >= t {
-					break
-				}
+func Day8(in string, part2 bool) int {
+	input := strings.Split(in, "\n")
+	// SAMPLE
+	//input := []string{
+	//	"30373",
+	//	"25512",
+	//	"65332",
+	//	"33549",
+	//	"35390",
+	//}
 
-			}
-			if visLeft {
-				treeLs = append(treeLs, &Tree{t, true})
-				continue
-			}
-			for tree := len(tr) - 1; tree >= i; tree-- {
-				if tree == i {
-					visRight = true
-				}
-				if rune(tr[tree]) >= t {
-					break
-				}
-			}
-			if visRight {
-				treeLs = append(treeLs, &Tree{t, true})
-				continue
-			}
-			treeLs = append(treeLs, &Tree{t, false})
-
+	grid := make([][]int, len(input))
+	for i, v := range input {
+		t := strings.Split(v, "")
+		grid[i] = make([]int, 0)
+		for _, s := range t {
+			d, _ := strconv.Atoi(s)
+			grid[i] = append(grid[i], d)
 		}
-		vis = append(vis, treeLs)
 	}
-	return vis
-}
 
-func checkVertical(trees [][]*Tree) [][]*Tree {
+	cols := make([][]int, len(grid[0]))
+	for i := 0; i < len(grid[0]); i++ {
+		cols[i] = make([]int, 0)
+		for j := 0; j < len(grid); j++ {
+			cols[i] = append(cols[i], grid[j][i])
+		}
+	}
 
-	for trRow, row := range trees {
-		for trI, tr := range row {
+	visible := 0
+	max := 0
+	for ri, row := range grid {
+		for ti, tree := range row {
+			if ri == 0 || ti == 0 || ri == len(grid)-1 || ti == len(row)-1 {
+				// top, bottom, left and right are always visible
+				visible++
+			} else if isVisible(row[ti+1:], tree) {
+				// right
+				visible++
+			} else if isVisible(row[:ti], tree) {
+				// left
+				visible++
+			} else if isVisible(cols[ti][ri+1:], tree) {
+				// below
+				visible++
+			} else if isVisible(cols[ti][:ri], tree) {
+				// above
+				visible++
+			}
 
-			if tr.visible {
-				continue
-			}
-			for t := 0; t <= trRow; t++ {
-				if t == trRow {
-					tr.visible = true
-					break
-				}
-				if trees[t][trI].height >= tr.height {
-					break
-				}
-			}
-			if tr.visible {
-				continue
-			}
-			for t := trRow + 1; t <= len(trees)-1; t++ {
-				if trees[t][trI].height >= tr.height {
-					break
-				}
-				if t == len(trees)-1 {
-					tr.visible = true
-					break
-				}
+			right := numVisible(row[ti+1:], tree, false)      // right
+			left := numVisible(row[:ti], tree, true)          // left
+			below := numVisible(cols[ti][ri+1:], tree, false) // below
+			above := numVisible(cols[ti][:ri], tree, true)    // above
+			score := right * left * below * above
+
+			if score > max {
+				max = score
 			}
 		}
 	}
-	return trees
+	if part2 {
+		return max
+	}
+	return visible
 }
